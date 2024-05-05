@@ -1,0 +1,7 @@
+[init]
+	defaultBranch = master
+[user]
+	email = antonin.brauer@yahoo.fr
+	name = Antonin Brauer
+[pull]
+	rebase = false
