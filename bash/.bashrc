@@ -134,7 +134,6 @@ shopt -s autocd
 silence_autocd() {
   exec {BASH_XTRACEFD}>/dev/null
 }
-
 silence_autocd
 
 # unsilence_autocd 
@@ -167,9 +166,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH="/home/taraxtix/.emacs.d/bin/:home/taraxtix/Software/bin:$PATH"
+export PATH="/home/taraxtix/ThirdParty/Jetbrains/bin:/home/taraxtix/ThirdParty/bin:/home/taraxtix/Prog/setup:$PATH"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT="-c"
 export BAT_PAGER='less -FRLn'
-export DATABASE_NAME='abrauer'
-export DATABASE_PASSWORD='Dummy_Password'
+
 . "$HOME/.cargo/env"
+
+[ -f "/home/taraxtix/.ghcup/env" ] && . "/home/taraxtix/.ghcup/env" # ghcup-env
