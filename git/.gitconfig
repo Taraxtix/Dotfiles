@@ -4,4 +4,6 @@
 	email = antonin.brauer@yahoo.fr
 	name = Antonin Brauer
 [pull]
-	rebase = false
+	rebase = true
+[push]
+	autoSetupRemote = true

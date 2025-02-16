@@ -12,6 +12,7 @@ alias gcommitM='git commit -m'
 alias glog='git log --oneline --graph --branches=*'
 alias gpull='git pull'
 alias gpush='git pull -q && git push'
+alias lg='lazygit'
 
 #Eza aliases
 alias ef='eza -lh --git --no-time'
