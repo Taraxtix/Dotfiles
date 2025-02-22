@@ -31,6 +31,11 @@ alias crq='cargo -q r'
 alias ct='cargo test'
 alias ctq='cargo -q test'
 
+# Build System aliases
+alias nj='ninja'
+alias mk='make'
+alias cmk='cmake'
+
 mkcd(){
     mkdir $1 && cd $1
 }

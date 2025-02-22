@@ -174,3 +174,4 @@ export BAT_PAGER='less -FRLn'
 . "$HOME/.cargo/env"
 
 [ -f "/home/taraxtix/.ghcup/env" ] && . "/home/taraxtix/.ghcup/env" # ghcup-env
+export CMAKE_GENERATOR=Ninja
