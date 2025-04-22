@@ -175,3 +175,10 @@ export BAT_PAGER='less -FRLn'
 
 [ -f "/home/taraxtix/.ghcup/env" ] && . "/home/taraxtix/.ghcup/env" # ghcup-env
 export CMAKE_GENERATOR=Ninja
+
+# Local
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$PATH:/home/taraxtix/.local/bin:/home/taraxtix/.config/emacs/bin:
+export ANDROID_NDK_HOME=/home/taraxtix/Android/Sdk/ndk/26.1.10909125/
+export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
+export PATH="$PATH:$HOME/Android/Sdk/cmdline-tools/latest/bin"

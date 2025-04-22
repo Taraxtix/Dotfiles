@@ -23,6 +23,9 @@ efT(){
 alias efs='ef --total-size'
 alias efas='efa --total-size'
 
+#Zoxide aliases
+#alias cd='zoxide'
+
 alias ascii='man ascii | grep -m 1 -A 66 --color=never Oct | bat --style grid,numbers -l vimrc'
 
 #Cargo aliases
