@@ -10,6 +10,9 @@ alias lg='lazygit'
 
 alias ascii='man ascii | grep -m 1 -A 66 --color=never Oct | bat --style grid,numbers -l vimrc'
 
+alias vim='nvim'
+alias v='nvim'
+
 #Cargo aliases
 alias cr='cargo r'
 alias crq='cargo -q r'
@@ -185,5 +188,15 @@ fi
 #
 # eval "$(zoxide init zsh)"
 
+source ~/.bash_aliases
+
 # PATH
-PATH=$HOME/ThirdParty/bin:$PATH
+export PATH="$HOME/ThirdParty/bin:$PATH"
+export PATH="/opt/android-sdk/platform-tools:$PATH"
+
+# Android
+export ANDROID_HOME="/opt/android-sdk"
+export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.0.13004108"
+export QT_QPA_PLATFORMTHEME=qt6ct
+export PATH="/home/taraxtix/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/taraxtix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"

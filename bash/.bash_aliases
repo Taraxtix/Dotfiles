@@ -15,13 +15,15 @@ alias gpush='git pull -q && git push'
 alias lg='lazygit'
 
 #Eza aliases
-alias ef='eza -lh --git --no-time'
-alias efa='eza -lha --git --no-time'
-efT(){
+alias l='eza -h --git --no-time'
+alias ll='eza -lh --git --no-time'
+alias la='eza -ha --git --no-time'
+alias lla='eza -lha --git --no-time'
+lT(){
     eza -lhTL=$1 --git --no-user --no-time --total-size $2
 }
-alias efs='ef --total-size'
-alias efas='efa --total-size'
+alias ls='ll --total-size'
+alias las='lla --total-size'
 
 #Zoxide aliases
 #alias cd='zoxide'
@@ -80,3 +82,9 @@ clog(){
     gsub("FATAL:", "'$SEVERE'FATAL:'$RESET'"); print $0\
     }'
 }
+
+standalone(){
+  $@ < /dev/null &>/dev/null & disown
+}
+
+alias evince='standalone evince'
