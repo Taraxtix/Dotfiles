@@ -1,9 +1,7 @@
 
-# Software Aliases
-alias android-studio='/usr/local/android-studio/bin/studio.sh & disown'
-alias firefox='firefox & disown'
-
 alias c='clear'
+alias v='nvim'
+
 # Git Aliases
 alias g='git'
 alias gstat='git status'
@@ -50,7 +48,7 @@ cdcode(){
 }
 
 install(){
-    yay -S $@
+    yay -Syu $@
 }
 
 untar(){
