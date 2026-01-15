@@ -1,45 +1,3 @@
-# Git Aliases
-alias g='git'
-alias gstat='git status'
-alias gadd='git add'
-alias gcommitM='git commit -m'
-alias glog='git log --oneline --graph --branches=*'
-alias gpull='git pull'
-alias gpush='git pull -q && git push'
-alias lg='lazygit'
-
-alias ascii='man ascii | grep -m 1 -A 66 --color=never Oct | bat --style grid,numbers -l vimrc'
-
-alias vim='nvim'
-alias v='nvim'
-
-#Cargo aliases
-alias cr='cargo r'
-alias crq='cargo -q r'
-alias ct='cargo test'
-alias ctq='cargo -q test'
-
-# Build System aliases
-alias nj='ninja'
-alias mk='make'
-alias cmk='cmake'
-
-mkcd(){
-    mkdir $1 && cd $1
-}
-
-cdcode(){
-    cd $1 && code .
-}
-
-untar(){
-    tar -xf $1
-}
-
-batdiff() {
-    git diff --name-only --relative | xargs bat --diff
-}
-
 # =============================================================================
 #
 # Utility functions for zoxide.
@@ -188,15 +146,24 @@ fi
 #
 # eval "$(zoxide init zsh)"
 
+#OhMyZsh
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
 source ~/.bash_aliases
 
 # PATH
 export PATH="$HOME/ThirdParty/bin:$PATH"
 export PATH="/opt/android-sdk/platform-tools:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Android
 export ANDROID_HOME="/opt/android-sdk"
 export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.0.13004108"
+
 export QT_QPA_PLATFORMTHEME=qt6ct
 export PATH="/home/taraxtix/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/taraxtix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
