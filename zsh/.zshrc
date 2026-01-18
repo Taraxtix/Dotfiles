@@ -1,3 +1,11 @@
+# Kitty terminal detection
+if [[ "$TERM" == "xterm-kitty" ]]; then
+  export TERM=xterm-kitty
+fi
+
+# Truecolor support
+export COLORTERM=truecolor
+
 # =============================================================================
 #
 # Utility functions for zoxide.
@@ -157,13 +165,19 @@ export FZF_DEFAULT_OPTS="
 #OhMyZsh
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
-plugins=(git)
-
+plugins=(
+  git
+  zsh-256color
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  zsh-shift-select
+)
 source $ZSH/oh-my-zsh.sh
 
 source ~/.bash_aliases
 
 # PATH
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/ThirdParty/bin:$PATH"
 export PATH="/opt/android-sdk/platform-tools:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
