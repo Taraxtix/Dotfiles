@@ -1,0 +1,10 @@
+{
+    "custom/clockcalcurse": {
+        "exec": "~/.config/waybar/scripts/clock_calcurse.sh",
+	"return-type": "json",
+	"interval": 30,
+	"signal": 8,
+	"on-click": "hyprctl dispatch exec 'kitty --class calcurse calcurse'",
+	"on-click-right": "~/.config/waybar/scripts/clock_calcurse_toggle.sh"
+    }
+}

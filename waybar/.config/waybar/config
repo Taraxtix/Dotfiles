@@ -1,0 +1,78 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 40,
+
+  "modules-left": [
+    "custom/power",
+    "custom/clockcalcurse",
+    "custom/updates",
+  ],
+
+  "modules-center": [
+    "custom/playertrack",
+    "hyprland/workspaces",
+    "hyprland/window",
+  ],
+
+  "modules-right": [
+    "network",
+    "bluetooth",
+    "pulseaudio",
+    "battery",
+    "custom/powerprofile",
+    "cpu",
+    "temperature",
+    "tray"
+  ],
+
+  "include": [
+      "~/.config/waybar/window.json",
+      "~/.config/waybar/bluetooth.json",
+      "~/.config/waybar/power_profile.json",
+      "~/.config/waybar/battery.json",
+      "~/.config/waybar/cpu.json",
+      "~/.config/waybar/temperature.json",
+      "~/.config/waybar/updates.json",
+      "~/.config/waybar/clock_calcurse.json",
+      "~/.config/waybar/player_track.json",
+    ],
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{id}"
+  },
+
+  "network": {
+    "format-wifi": "󰤨 {signalStrength}%",
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤭",
+
+    "on-click": "nm-connection-editor",
+
+    "tooltip": true,
+    "tooltip-format-wifi": "{essid}\nIP: {ipaddr}\nSpeed:  {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-ethernet": "IP: {ipaddr}\nSpeed:  {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-disconnected": "Disconnected"
+  },
+
+  "pulseaudio": {
+    "format": " {volume}%",
+    "format-muted": "󰝟",
+    "on-click": "pavucontrol",
+    "scroll-step": 5
+  },
+
+  "tray": {
+    "spacing": 10
+  },
+  
+  "custom/power": {
+    "format": "⏻",
+    "tooltip": "Power menu",
+    "on-click": "~/.config/waybar/scripts/power-menu.sh"
+  }
+
+}
+

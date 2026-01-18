@@ -1,0 +1,10 @@
+{
+	"custom/powerprofile": {
+  		"exec": "~/.config/waybar/scripts/power-profile-status.sh",
+  		"interval": 60,
+		"signal": 9,
+		"return-type": "json",
+  		"on-click": "~/.config/waybar/scripts/power-profile-cycle.sh",
+	}
+}
+

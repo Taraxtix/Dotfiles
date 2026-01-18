@@ -1,0 +1,13 @@
+{
+    "custom/playertrack":{
+        "exec": "~/.config/waybar/scripts/player_track.sh",
+	"interval": 5,
+	"signal": 10,
+	"return-type": "json",
+	"on-click-middle": "playerctl -p deezer play-pause && pkill -SIGRTMIN+10 waybar",
+	"on-click-right": "playerctl -p deezer next && sleep 0.5 && pkill -SIGRTMIN+10 waybar",
+	"on-click": "playerctl -p deezer previous && sleep 0.5 && pkill -SIGRTMIN+10 waybar",
+	"on-scroll-down": "~/.config/waybar/scripts/player_volume.sh down",
+	"on-scroll-up": "~/.config/waybar/scripts/player_volume.sh up",
+    },
+}

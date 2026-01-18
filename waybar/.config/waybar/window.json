@@ -1,0 +1,14 @@
+{
+	"hyprland/window": {
+		"icon":true,
+		"rewrite":{
+			"Steam": "",
+			"KDE Connect": "",
+			"(.*) — Zen Browser": "$1",
+			"(.*) - Discord": "$1",
+			"(.*) - Deezer": "$1",
+		},
+		"separate-outputs":true,
+		"max-length":50,
+	},
+}

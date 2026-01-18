@@ -1,0 +1,90 @@
+@import "rose-pine.css";
+
+* {
+  font-family: JetBrainsMono Nerd Font;
+  font-size: 18px;
+}
+
+window#waybar {
+  background: @overlay;
+  color: @text;
+}
+
+#workspaces button {
+  padding: 0 6px;
+  color: @highlightHigh;
+}
+
+#workspaces button.active {
+  color: @gold;
+}
+
+#cpu,
+#custom-updates,
+#custom-power,
+#custom-powerprofile,
+#custom-clockcalcurse,
+#custom-playertrack,
+#bluetooth,
+#network,
+#pulseaudio,
+#battery,
+#tray {
+  padding: 0 8px;
+}
+
+#custom-playertrack {
+  padding-right: 50px;
+  padding-left: 0;
+}
+
+#window {
+  padding-right: 50px;
+}
+
+#bluetooth {
+  margin: 8px 0;
+  border-radius: 33%;
+}
+
+#bluetooth.disabled {
+  color: @muted;
+}
+
+#bluetooth.connected {
+  color: @text;
+  background: @pine;
+}
+
+#custom-powerprofile {
+  margin: 8px 0;
+  border-radius: 999px;
+}
+
+/* Power saver → green */
+#custom-powerprofile.power-saver {
+  background: @iris;
+}
+
+/* Balanced → gray */
+#custom-powerprofile.balanced {
+  background: @foam;
+}
+
+/* Performance → red */
+#custom-powerprofile.performance {
+  background: @gold;
+}
+
+#custom-updates {
+  padding: 0 8px;
+}
+
+#custom-updates.pending {
+  color: @gold;
+}
+
+#custom-updates.ok {
+  color: @subtle;
+}
+
