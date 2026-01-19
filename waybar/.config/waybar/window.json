@@ -4,7 +4,9 @@
 		"rewrite":{
 			"Steam": "",
 			"KDE Connect": "",
-			"(.*) — Zen Browser": "$1",
+			"(\\(\\d+\\) )?(.*) - YouTube — Zen Browser": " $2",
+			// This is messed up: without the `^` and `$` the order of rewrite is reversed and thus breaks it
+			"^(.*) — Zen Browser$": "$1",
 			"(.*) - Discord": "$1",
 			"(.*) - Deezer": "$1",
 		},
