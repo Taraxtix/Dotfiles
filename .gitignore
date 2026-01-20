@@ -1,3 +1,4 @@
 ssh/.ssh/id_rsa*
 ssh/.ssh/**.old
 ssh/.ssh/known_hosts
+**/*.cache

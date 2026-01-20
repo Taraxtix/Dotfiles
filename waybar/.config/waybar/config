@@ -19,7 +19,7 @@
     "network",
     "bluetooth",
     "pulseaudio",
-    "battery",
+    "custom/battery",
     "custom/powerprofile",
     "cpu",
     "temperature",
