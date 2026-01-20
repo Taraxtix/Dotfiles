@@ -3,8 +3,9 @@
   		"format": "",
   		"format-connected": "{num_connections}",
   		"format-disabled": "󰂲",
-  		"tooltip-format": "{controller_alias}\nConnected: {num_connections}",
+  		"tooltip-format": "Connections:\n{device_enumerate}",
+		"tooltip-format-enumerate-connected": "{device_alias}",
+		"tooltip-format-enumerate-connected-battery": "{device_alias} 󰁹{device_battery_percentage}%",
   		"on-click": "blueman-manager",
 	},
 }
-
