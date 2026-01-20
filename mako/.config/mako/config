@@ -1,0 +1,55 @@
+# ─── Appearance ───────────────────────────────────────
+# Positioning
+anchor=top-right
+margin=12
+layer=overlay
+
+# Font
+font=JetBrainsMono Nerd Font 16
+text-alignment=center
+
+#Layout
+width=400
+height=300
+padding=12,16
+border-size=1
+border-radius=10
+
+# Background
+background-color=#26233ae6
+text-color=#e0def4
+
+icons=1
+format=%a\n%s\n\n%b
+
+# ─── Timing ───────────────────────────────────────────
+default-timeout=5000
+ignore-timeout=false
+
+# ─── Mouse interaction ───────────────────────────────
+on-button-right=dismiss
+on-button-middle=dismiss-all
+on-button-left=none
+
+# ─── Behavior ────────────────────────────────────────
+max-visible=5
+sort=-time
+
+[urgency=low]
+border-color=#9ccfd8
+
+[urgency=critical]
+border-color=#eb6f92
+font=JetBrainsMono Nerd Font Bold 16
+default-timeout=0
+ignore-timeout=true
+
+[category=warning]
+border-color=#f6c177
+font=JetBrainsMono Nerd Font Bold 16
+
+[category=log]
+background-color=#26233a80
+border-size=0
+default-timeout=1500
+font=JetBrainsMono Nerd Font 14
