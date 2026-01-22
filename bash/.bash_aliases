@@ -1,4 +1,3 @@
-
 alias c='clear'
 alias v='nvim'
 
@@ -17,8 +16,10 @@ alias l='eza -h --git --no-time'
 alias ll='eza -lh --git --no-time'
 alias la='eza -ha --git --no-time'
 alias lla='eza -lha --git --no-time'
-lT(){
-    eza -lhTL=$1 --git --no-user --no-time --total-size $2
+lT() {
+  SIZE=$1
+  shift 1
+  eza -lhTL=$SIZE --git --no-user --no-time --total-size $@
 }
 alias ls='ll --total-size'
 alias las='lla --total-size'
@@ -39,36 +40,36 @@ alias nj='ninja'
 alias mk='make'
 alias cmk='cmake'
 
-mkcd(){
-    mkdir $1 && cd $1
+mkcd() {
+  mkdir $1 && cd $1
 }
 
-cdcode(){
-    cd $1 && code .
+cdcode() {
+  cd $1 && code .
 }
 
-install(){
-    yay -Syu $@
+install() {
+  yay -Syu $@
 }
 
-untar(){
-    tar -xf $1
+untar() {
+  tar -xf $1
 }
 
 batdiff() {
-    git diff --name-only --relative | xargs bat --diff
+  git diff --name-only --relative | xargs bat --diff
 }
 
-clog(){
-    INFO='\033[38;5;243m'
-    DEBUG='\033[38;5;025m'
-    TRACE='\033[38;5;028m'
-    WARN='\033[38;5;214m'
-    ERROR='\033[38;5;160m'
-    SEVERE='\033[38;5;001m'
-    RESET='\033[0m'
+clog() {
+  INFO='\033[38;5;243m'
+  DEBUG='\033[38;5;025m'
+  TRACE='\033[38;5;028m'
+  WARN='\033[38;5;214m'
+  ERROR='\033[38;5;160m'
+  SEVERE='\033[38;5;001m'
+  RESET='\033[0m'
 
-    $1 | awk -W interactive '{\
+  $1 | awk -W interactive '{\
     gsub("INFO:", "'$INFO'INFO:'$RESET'");\
     gsub("DEBUG:", "'$DEBUG'DEBUG:'$RESET'")\
     gsub("TRACE:", "'$TRACE'TRACE:'$RESET'")\
@@ -81,8 +82,9 @@ clog(){
     }'
 }
 
-standalone(){
-  $@ < /dev/null &>/dev/null & disown
+standalone() {
+  $@ </dev/null &>/dev/null &
+  disown
 }
 
 alias evince='standalone evince'
