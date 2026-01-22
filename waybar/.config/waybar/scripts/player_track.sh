@@ -5,15 +5,18 @@ set -e
 trim() { # trim "<string>" <maxlen>
   s=$1
   max=$2
-  [ "${#s}" -le "$max" ] && { printf '%s' "$s"; return; }
+  [ "${#s}" -le "$max" ] && {
+    printf '%s' "$s"
+    return
+  }
   printf '%s…' "$(printf '%s' "$s" | cut -c "1-$max")"
 }
 
 json_escape() {
   # shellcheck disable=SC2001
-  printf %s "$1" \
-    | sed 's/\\/\\\\/g; s/"/\\"/g; s/&/\&amp;/g' \
-    | sed ':a;N;$!ba;s/\n/\\n/g'
+  printf %s "$1" |
+    sed 's/\\/\\\\/g; s/"/\\"/g; s/&/\&amp;/g' |
+    sed ':a;N;$!ba;s/\n/\\n/g'
 }
 
 STATUS=$(playerctl status)
@@ -25,9 +28,9 @@ VOLUME_FLOAT=$(echo "$(playerctl volume) * 100" | bc)
 VOLUME=$(printf "%.0f" "$VOLUME_FLOAT")
 
 if [ "$STATUS" = "Playing" ]; then
-    ICON=" "
+  ICON=" "
 else
-    ICON=" "
+  ICON=" "
 fi
 
-printf '{"text":"  %s%% %s: %s - %s",}' "$VOLUME" "$ICON" "$TITLE" "$ARTIST"
+printf '{"text":"  %s%% %s%s - %s",}' "$VOLUME" "$ICON" "$TITLE" "$ARTIST"
