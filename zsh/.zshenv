@@ -1,53 +1,49 @@
 #!/usr/bin/env zsh
-#!          ░▒▓
-#!        ░▒▒░▓▓
-#!      ░▒▒▒░░░▓▓           ___________
-#!    ░░▒▒▒░░░░░▓▓        //___________/
-#!   ░░▒▒▒░░░░░▓▓     _   _ _    _ _____
-#!   ░░▒▒░░░░░▓▓▓▓▓▓ | | | | |  | |  __/
-#!    ░▒▒░░░░▓▓   ▓▓ | |_| | |_/ /| |___
-#!     ░▒▒░░▓▓   ▓▓   \__  |____/ |____/    ▀█ █▀ █░█
-#!       ░▒▓▓   ▓▓  //____/                █▄ ▄█ █▀█
-
-# HyDE's ZSH env configuration
-# This file is sourced by ZSH on startup
-# And ensures that we have an obstruction-free ~/.zshrc file
-# This also ensures that the proper HyDE $ENVs are loaded
 
 function command_not_found_handler {
     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
     printf "${green}zsh${reset}: command ${purple}NOT${reset} found: ${bright}'%s'${reset}\n" "$1"
 
-    PM="pm.sh"
-    # Try to find pm.sh in common locations
-    if [ ! command -v "${PM}" ] &>/dev/null; then
-        for path in "/usr/lib/hyde" "/usr/local/lib/hyde" "$HOME/.local/lib/hyde" "$HOME/.local/bin"; do
-            if [[ -x "$path/pm.sh" ]]; then
-                PM="$path/pm.sh"
-                break
-            else
-                unset PM
-            fi
-        done
+    YAY_SEARCH=$(yay -Ss $1 | tail -n 2)
+    if [ -z "$YAY_SEARCH" ]; then
+      printf "Cannot find a package matching %s\n" "$1"
+      fuck
+      return $?
     fi
+    printf "Best match for %s:\n%s\n\n" "$1" "$YAY_SEARCH"
+    
+    printf "Press [Ii] to Install it with 'yay -Syu\n"
+    printf "Press [Mm] to see more result\n"
+    printf "Press Enter to skip and run \`fuck\`\n"
 
-    if ! command -v "${PM}" &>/dev/null; then
-        printf "${bright}${red}We cannot find package manager script (${purple}pm.sh${red}) from ${green}HyDE${reset}\n"
-        return 127
-    fi
+    local OPTION
 
-    if ! "${PM}" fq "/usr/bin/$1"; then
-        printf "${bright}${green}[ ${1} ]${reset} ${purple}NOT${reset} found in the system and no package provides it.\n"
-        return 127
-    else
-        printf "${green}[ ${1} ] ${reset} might be provided by the above packages.\n"
-        for entry in $entries; do
-            # Assuming the entry already has ANSI color codes, we don't add more colors
-            printf "  %s\n" "${entry}"
-        done
+    while :; do
+      read -s -k 1 OPTION
+      case "$OPTION" in
+        $'\n'|[iImM]|$'\e')
+          break
+          ;;
+        *)
+          # ignore any other key
+          ;;
+      esac
+    done
 
-    fi
-    return 127
+    case "$OPTION" in
+      $'\e') return 130;;
+      $'\n') fuck;;
+      [iI]) yay -Syu "$1";;
+      [mM])
+        yay -Ss "$1"
+        printf "Enter a package to install or ENTER to quit\n"
+        read PACKAGE
+        if [ -z "$PACKAGE" ]; then
+          return 130
+        fi
+        yay -Syu "$PACKAGE"
+      ;;
+    esac
 }
 
 function load_zsh_plugins {

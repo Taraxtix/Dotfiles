@@ -164,7 +164,7 @@ export FZF_DEFAULT_OPTS="
 
 #OhMyZsh
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 plugins=(
   git
   zsh-256color
@@ -173,6 +173,11 @@ plugins=(
   zsh-shift-select
 )
 source $ZSH/oh-my-zsh.sh
+
+setopt CORRECT
+setopt CORRECT_ALL
+
+eval $(thefuck --alias)
 
 source ~/.bash_aliases
 
