@@ -29,7 +29,7 @@ ignore-timeout=false
 # ─── Mouse interaction ───────────────────────────────
 on-button-right=dismiss
 on-button-middle=dismiss-all
-on-button-left=none
+on-button-left=exec makoctl menu -n "$id" /home/taraxtix/.config/mako/scripts/action_handler.sh
 
 # ─── Behavior ────────────────────────────────────────
 max-visible=5
