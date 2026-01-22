@@ -17,14 +17,13 @@ total=$((repo + aur))
 
 # Choose icon + class
 if [ "$total" -eq 0 ]; then
-  icon="󰏗"     # up-to-date
+  icon="󰏗" # up-to-date
   class="ok"
 else
-  icon="󰚰"     # updates
+  icon="󰚰" # updates
   class="pending"
 fi
 
 # JSON output for Waybar
 printf '{"text":"%s %s","class":"%s","tooltip":"Repo: %s\\nAUR: %s\\nTotal: %s\\n\\nClick: update now"}\n' \
   "$icon" "$total" "$class" "$repo" "$aur" "$total"
-
