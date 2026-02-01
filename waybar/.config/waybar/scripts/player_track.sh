@@ -21,11 +21,10 @@ json_escape() {
 
 STATUS=$(playerctl status)
 TITLE_RAW=$(playerctl metadata title)
-TITLE=$(json_escape "$(trim "$TITLE_RAW" 30)")
+TITLE_STRIPPED=$(echo "$TITLE_RAW" | sed 's/[[:space:]]*(.*)$//')
+TITLE=$(json_escape "$(trim "$TITLE_STRIPPED" 30)")
 ARTIST_RAW=$(playerctl metadata artist)
 ARTIST=$(json_escape "$(trim "$ARTIST_RAW" 30)")
-VOLUME_FLOAT=$(echo "$(playerctl volume) * 100" | bc)
-VOLUME=$(printf "%.0f" "$VOLUME_FLOAT")
 
 if [ "$STATUS" = "Playing" ]; then
   ICON=" "
@@ -33,4 +32,4 @@ else
   ICON=" "
 fi
 
-printf '{"text":"  %s%% %s%s - %s",}' "$VOLUME" "$ICON" "$TITLE" "$ARTIST"
+printf '{"text":"%s%s - %s","tooltip":"%s - %s"}' "$ICON" "$TITLE" "$ARTIST" "$(json_escape "$TITLE_RAW")" "$(json_escape "$ARTIST_RAW")"
