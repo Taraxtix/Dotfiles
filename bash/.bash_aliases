@@ -57,8 +57,15 @@ untar() {
 }
 
 batdiff() {
-  git diff --name-only --relative | xargs bat --diff
+  git diff --name-only --relative --diff-filter=d -z | xargs -0 bat --diff
 }
+
+alias bathelp='bat --plain --language=help'
+help() {
+  "$@" --help 2>&1 | bathelp
+}
+alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
 
 clog() {
   INFO='\033[38;5;243m'
