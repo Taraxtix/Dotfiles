@@ -61,7 +61,8 @@
     "format": " {volume}%",
     "format-muted": "󰝟",
     "on-click": "pavucontrol",
-    "scroll-step": 5
+    "scroll-step": 5,
+    "max-volume": 150,
   },
 
   "tray": {
