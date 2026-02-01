@@ -194,3 +194,5 @@ export ANDROID_NDK_HOME="$ANDROID_HOME/ndk/28.0.13004108"
 export QT_QPA_PLATFORMTHEME=qt6ct
 export PATH="/home/taraxtix/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/taraxtix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
+
+export MANPAGER="bat -plman"
