@@ -43,6 +43,17 @@ return {
 
     wk.add({
       { "<leader>g", group = "Git" },
+      { "<leader>gc", group = "Conflicts" },
+      { "<leader>gco" , desc = "Take ours" },
+      { "<leader>gct" , desc = "Take theirs" },
+      { "<leader>gcb" , desc = "Take both" },
+      { "<leader>gcn" , desc = "Take none" },
+      { "<leader>g]" , group = "Next.." },
+      { "<leader>g]c" , desc = "Conflict" },
+      { "<leader>g[" , group = "Previous.." },
+      { "<leader>g[c" , desc = "Conflict" },
+      { "<leader>gt" , group = "Toggle" },
+      { "<leader>gtd" , desc = "Diff view" },
     })
 
     wk.add({ -- No group keybinds
@@ -61,6 +72,8 @@ return {
       { "<leader>ec", group = "Change" },
       { "<leader>ecw", group = "Change Working..." },
       { "<leader>ecwd", desc = "Change Working Directory" },
+      { "<leader>ee", group = "Edit" },
+      { "<leader>eep", desc = "Projects file" },
     })
 
     wk.add({

@@ -1,51 +1,73 @@
 -- lua/plugins/gitsigns.lua
 return {
   {
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    'lewis6991/gitsigns.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
     opts = function()
       return {
         signcolumn = true, -- show signs in signcolumn
-        numhl = false,     -- number highlighting
-        linehl = false,    -- full line highlighting
+        numhl = false, -- number highlighting
+        linehl = false, -- full line highlighting
         word_diff = false,
 
         signs = {
-          add          = { text = "+" },
-          change       = { text = "~" },
-          delete       = { text = "-" },
-          topdelete    = { text = "‾" },
-          changedelete = { text = "~-" },
-          untracked    = { text = "┆" },
+          add = { text = '+' },
+          change = { text = '~' },
+          delete = { text = '-' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~-' },
+          untracked = { text = '┆' },
         },
       }
     end,
 
     config = function(_, opts)
-      require("gitsigns").setup(opts)
+      require('gitsigns').setup(opts)
 
-      vim.opt.signcolumn = "yes"
+      vim.opt.signcolumn = 'yes'
 
       -- ---------------------------
       -- Diff toggle: <leader>gtd
       -- ---------------------------
-      local gs = require("gitsigns")
+      local gs = require('gitsigns')
 
       local function diff_is_on()
-        -- diff mode is window-local
         return vim.wo.diff
       end
 
       local function toggle_diff()
         if diff_is_on() then
-          vim.cmd("diffoff")
+          -- Turn diff off everywhere in the tab.
+          vim.cmd('diffoff!')
+
+          -- Defer cleanup to the next tick so gitsigns finishes its refresh safely.
+          vim.defer_fn(function()
+            local curwin = vim.api.nvim_get_current_win()
+
+            for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+              if win ~= curwin and vim.api.nvim_win_is_valid(win) then
+                local buf = vim.api.nvim_win_get_buf(win)
+                local name = vim.api.nvim_buf_get_name(buf)
+
+                -- Only target the gitsigns diff buffer.
+                if name:match('^gitsigns://') then
+                  -- Close the window first…
+                  pcall(vim.api.nvim_win_close, win, false)
+                  -- …then delete the buffer so no stale diff state remains.
+                  pcall(vim.api.nvim_buf_delete, buf, { force = true })
+                  break
+                end
+              end
+            end
+          end, 0)
+
           return
         end
 
         gs.diffthis()
       end
 
-      vim.keymap.set("n", "<leader>gtd", toggle_diff, { desc = "Git: toggle diff (HEAD)" })
+      vim.keymap.set('n', '<leader>gtd', toggle_diff, { desc = 'Git: toggle diff (HEAD)' })
 
       -- ----------------------------------------------------
       -- Merge conflict helpers (no extra plugin required)
@@ -55,7 +77,7 @@ return {
       end
 
       local function get_git_dir()
-        local ok_cache, cache = pcall(require, "gitsigns.cache")
+        local ok_cache, cache = pcall(require, 'gitsigns.cache')
         if ok_cache and cache and cache.cache and cache.cache[vim.api.nvim_get_current_buf()] then
           local c = cache.cache[vim.api.nvim_get_current_buf()]
           if c and c.gitdir then
@@ -63,14 +85,14 @@ return {
           end
         end
 
-        local out = vim.fn.systemlist({ "git", "rev-parse", "--git-dir" })
+        local out = vim.fn.systemlist({ 'git', 'rev-parse', '--git-dir' })
         if vim.v.shell_error ~= 0 or not out[1] then
           return nil
         end
 
         local gd = out[1]
-        if not gd:match("^/") then
-          gd = vim.fn.fnamemodify(gd, ":p")
+        if not gd:match('^/') then
+          gd = vim.fn.fnamemodify(gd, ':p')
         end
         return gd
       end
@@ -86,17 +108,17 @@ return {
         -- rebase-apply / rebase-merge: rebase
         -- CHERRY_PICK_HEAD: cherry-pick
         -- REVERT_HEAD: revert
-        return is_git_dir(gitdir .. "/MERGE_HEAD")
-          or is_git_dir(gitdir .. "/rebase-apply")
-          or is_git_dir(gitdir .. "/rebase-merge")
-          or is_git_dir(gitdir .. "/CHERRY_PICK_HEAD")
-          or is_git_dir(gitdir .. "/REVERT_HEAD")
+        return is_git_dir(gitdir .. '/MERGE_HEAD')
+          or is_git_dir(gitdir .. '/rebase-apply')
+          or is_git_dir(gitdir .. '/rebase-merge')
+          or is_git_dir(gitdir .. '/CHERRY_PICK_HEAD')
+          or is_git_dir(gitdir .. '/REVERT_HEAD')
       end
 
       local function has_conflict_markers()
         local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
         for _, l in ipairs(lines) do
-          if l:match("^<<<<<<<") or l:match("^=======") or l:match("^>>>>>>>") then
+          if l:match('^<<<<<<<') or l:match('^=======') or l:match('^>>>>>>>') then
             return true
           end
         end
@@ -104,23 +126,23 @@ return {
       end
 
       local function notify_warn(msg)
-        vim.notify(msg, vim.log.levels.WARN, { title = "Git" })
+        vim.notify(msg, vim.log.levels.WARN, { title = 'Git' })
       end
 
       local function conflict_next()
         if not has_conflict_markers() then
-          notify_warn("No conflict markers in this buffer.")
+          notify_warn('No conflict markers in this buffer.')
           return
         end
-        vim.fn.search("^<<<<<<<", "W")
+        vim.fn.search('^<<<<<<<', 'W')
       end
 
       local function conflict_prev()
         if not has_conflict_markers() then
-          notify_warn("No conflict markers in this buffer.")
+          notify_warn('No conflict markers in this buffer.')
           return
         end
-        vim.fn.search("^<<<<<<<", "bW")
+        vim.fn.search('^<<<<<<<', 'bW')
       end
 
       -- Resolve helpers via :diffget
@@ -129,25 +151,25 @@ return {
       -- If not in diff mode, we still can help using conflict markers only (see below).
       local function diffget_ours()
         if not diff_is_on() then
-          notify_warn("Not in diff mode. Use <leader>gtd to open a diff first.")
+          notify_warn('Not in diff mode. Use <leader>gtd to open a diff first.')
           return
         end
-        vim.cmd("diffget //2")
+        vim.cmd('diffget //2')
       end
 
       local function diffget_theirs()
         if not diff_is_on() then
-          notify_warn("Not in diff mode. Use <leader>gtd to open a diff first.")
+          notify_warn('Not in diff mode. Use <leader>gtd to open a diff first.')
           return
         end
-        vim.cmd("diffget //3")
+        vim.cmd('diffget //3')
       end
 
       -- Marker-based resolution (works even without diff mode):
       -- Select the conflict block and keep either side.
       local function resolve_with_markers(which)
         if not has_conflict_markers() then
-          notify_warn("No conflict markers in this buffer.")
+          notify_warn('No conflict markers in this buffer.')
           return
         end
 
@@ -157,49 +179,49 @@ return {
 
         local start = nil
         for i = cur, 0, -1 do
-          if lines[i + 1]:match("^<<<<<<<") then
+          if lines[i + 1]:match('^<<<<<<<') then
             start = i
             break
           end
         end
         if start == nil then
-          notify_warn("Cursor is not inside a conflict block.")
+          notify_warn('Cursor is not inside a conflict block.')
           return
         end
 
         local mid, finish = nil, nil
         for i = start + 1, #lines - 1 do
-          if lines[i + 1]:match("^=======") then
+          if lines[i + 1]:match('^=======') then
             mid = i
-          elseif lines[i + 1]:match("^>>>>>>>") then
+          elseif lines[i + 1]:match('^>>>>>>>') then
             finish = i
             break
           end
         end
 
         if not (mid and finish) then
-          notify_warn("Malformed conflict markers (missing ======= or >>>>>>>).")
+          notify_warn('Malformed conflict markers (missing ======= or >>>>>>>).')
           return
         end
 
         -- Build replacement depending on choice
         local keep = {}
-        if which == "ours" then
+        if which == 'ours' then
           for i = start + 1, mid - 1 do
             table.insert(keep, lines[i + 1])
           end
-        elseif which == "theirs" then
+        elseif which == 'theirs' then
           for i = mid + 1, finish - 1 do
             table.insert(keep, lines[i + 1])
           end
-        elseif which == "both" then
+        elseif which == 'both' then
           for i = start + 1, mid - 1 do
             table.insert(keep, lines[i + 1])
           end
           for i = mid + 1, finish - 1 do
             table.insert(keep, lines[i + 1])
           end
-        elseif which == "none" then
+        elseif which == 'none' then
           keep = {}
         end
 
@@ -208,43 +230,50 @@ return {
       end
 
       -- Keymaps (choose a consistent category: <leader>g m ...)
-      vim.keymap.set("n", "<leader>g]c", conflict_next, { desc = "Git: next conflict" })
-      vim.keymap.set("n", "<leader>g[c", conflict_prev, { desc = "Git: prev conflict" })
+      vim.keymap.set('n', '<leader>g]c', conflict_next, { desc = 'Git: next conflict' })
+      vim.keymap.set('n', '<leader>g[c', conflict_prev, { desc = 'Git: prev conflict' })
 
       -- Prefer diffget when in diff mode, fallback to marker-based when not.
-      vim.keymap.set("n", "<leader>gco", function()
+      vim.keymap.set('n', '<leader>gco', function()
         if diff_is_on() then
           diffget_ours()
         else
-          resolve_with_markers("ours")
+          resolve_with_markers('ours')
         end
-      end, { desc = "Git: take ours" })
+      end, { desc = 'Git: take ours' })
 
-      vim.keymap.set("n", "<leader>gct", function()
+      vim.keymap.set('n', '<leader>gct', function()
         if diff_is_on() then
           diffget_theirs()
         else
-          resolve_with_markers("theirs")
+          resolve_with_markers('theirs')
         end
-      end, { desc = "Git: take theirs" })
+      end, { desc = 'Git: take theirs' })
 
-      vim.keymap.set("n", "<leader>gcb", function()
-        resolve_with_markers("both")
-      end, { desc = "Git: take both" })
+      vim.keymap.set('n', '<leader>gcb', function()
+        resolve_with_markers('both')
+      end, { desc = 'Git: take both' })
 
-      vim.keymap.set("n", "<leader>gcn", function()
-        resolve_with_markers("none")
-      end, { desc = "Git: take none" })
+      vim.keymap.set('n', '<leader>gcn', function()
+        resolve_with_markers('none')
+      end, { desc = 'Git: take none' })
 
       -- Optional: warn if you're in a merge state (nice UX)
-      vim.api.nvim_create_user_command("GitMergeStatus", function()
+      vim.api.nvim_create_user_command('GitMergeStatus', function()
         if merge_in_progress() then
-          vim.notify("Merge/rebase/cherry-pick in progress.", vim.log.levels.INFO, { title = "Git" })
+          vim.notify(
+            'Merge/rebase/cherry-pick in progress.',
+            vim.log.levels.INFO,
+            { title = 'Git' }
+          )
         else
-          vim.notify("No merge/rebase/cherry-pick in progress.", vim.log.levels.INFO, { title = "Git" })
+          vim.notify(
+            'No merge/rebase/cherry-pick in progress.',
+            vim.log.levels.INFO,
+            { title = 'Git' }
+          )
         end
       end, {})
     end,
   },
 }
-
