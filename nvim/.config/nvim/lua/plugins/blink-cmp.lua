@@ -50,7 +50,11 @@ return {
         -- Accept completion when something is available,
         -- else move through snippet placeholders,
         -- else fallback to a literal Tab.
-        ["<Tab>"] = { "accept", "snippet_forward", "fallback" },
+        ["<Tab>"] = { "accept", "fallback" },
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback" },
+        ["<Up>"] = { "select_prev", "fallback" },
 
         -- Snippet backward jump, else fallback
         ["<S-Tab>"] = { "snippet_backward", "fallback" },

@@ -103,6 +103,8 @@ return {
       { "<leader>cgi", desc = "Implementations"},
       { "<leader>cgr", desc = "References"},
       { "<leader>cgt", desc = "Type Definitions"},
+      { "<leader>cg[", desc = "Back (Jumplist)"},
+      { "<leader>cg]", desc = "Forward (Jumplist)"},
     })
 
     -- ===== Built-in prefixes: documentation only (no new mappings) =====

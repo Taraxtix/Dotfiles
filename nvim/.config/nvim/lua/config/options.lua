@@ -89,3 +89,7 @@ opt.breakindent = true
 
 -- Make wrapped lines visually continue instead of disappearing.
 opt.showbreak = '↪ '
+
+-- Makes folds, cursor and curdir part of the view
+opt.viewoptions = { 'folds', 'cursor', 'curdir' }
+

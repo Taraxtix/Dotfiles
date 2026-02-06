@@ -74,6 +74,12 @@ map('n', '<leader>cd', function()
   require('config.telescope_code').diagnostics()
 end, { desc = 'Code diagnostics' })
 
+--- Toggle ---
+-- Inlay hints --
+map('n', "<leader>cth", function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end, { desc = "Toggle Inlay Hints"})
+
 --- Change ---
 -- Code Action --
 map('n', '<leader>cca', function()
@@ -113,6 +119,12 @@ end, { desc = 'Go to References' })
 map('n', '<leader>cgt', function()
   require('telescope.builtin').lsp_type_definitions()
 end, { desc = 'Go to Type Definitions' })
+
+---- Compilation Mode ----
+-- Run --
+map('n', '<leader>Cr', function()
+  require('config.compile').run()
+end, { desc = 'Compile: run' })
 
 ---- Find ----
 -- Files --
