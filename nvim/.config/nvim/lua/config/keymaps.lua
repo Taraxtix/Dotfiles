@@ -68,7 +68,7 @@ end, { desc = 'Show keymaps' })
 -- Scratch buffer --
 map('n', "<leader>ss", "<cmd>edit ~/QuickFiles/scratch.txt<CR>", { desc = 'Show scratch buffer' })
 
---- Code ----
+---- Code ----
 -- Diagnostics --
 map('n', '<leader>cd', function()
   require('config.telescope_code').diagnostics()

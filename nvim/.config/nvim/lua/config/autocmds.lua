@@ -4,33 +4,77 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 -- Create a group for our autocmds so they can be managed as one unit.
-local group = augroup("ConfigAutocmds", { clear = true })
+local group = augroup('ConfigAutocmds', { clear = true })
 
 -- Highlight text briefly after yanking (visual feedback).
-autocmd("TextYankPost", {
-	group = group,
-	desc = "Highlight when yanking text",
-	callback = function()
-		vim.highlight.on_yank({ timeout = 200 })
-	end,
+autocmd('TextYankPost', {
+  group = group,
+  desc = 'Highlight when yanking text',
+  callback = function()
+    vim.highlight.on_yank({ timeout = 200 })
+  end,
 })
 
 -- Auto-reload Neovim config when saving Lua files in your config directory.
-autocmd("BufWritePost", {
-	group = group,
-	desc = "Auto-reload config on save",
-	pattern = vim.fn.stdpath("config") .. "/lua/**/*.lua",
-	callback = function()
-		require("config.reload").reload_config()
-	end,
+autocmd('BufWritePost', {
+  group = group,
+  desc = 'Auto-reload config on save',
+  pattern = vim.fn.stdpath('config') .. '/lua/**/*.lua',
+  callback = function()
+    require('config.reload').reload_config()
+  end,
 })
 
 -- Also reload when saving init.lua.
-autocmd("BufWritePost", {
-	group = group,
-	desc = "Auto-reload init.lua on save",
-	pattern = vim.fn.stdpath("config") .. "/init.lua",
-	callback = function()
-		require("config.reload").reload_config()
-	end,
+autocmd('BufWritePost', {
+  group = group,
+  desc = 'Auto-reload init.lua on save',
+  pattern = vim.fn.stdpath('config') .. '/init.lua',
+  callback = function()
+    require('config.reload').reload_config()
+  end,
+})
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = group,
+  pattern = '*',
+  command = 'silent! loadview',
+})
+
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  group = group,
+  pattern = '*',
+  command = 'silent! loadview',
+})
+
+vim.api.nvim_create_autocmd('WinEnter', {
+  group = group,
+  pattern = '*',
+  command = 'silent! loadview',
+})
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = group,
+  pattern = '*',
+  command = 'silent! mkview',
+})
+
+-- Load the compilation buffer state on startup, save on exit.
+
+local group = vim.api.nvim_create_augroup('ConfigCompilation', { clear = true })
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = group,
+  callback = function()
+    -- Load persisted output and last command.
+    require('config.compile').load_state()
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  group = group,
+  callback = function()
+    -- Save output and last command.
+    require('config.compile').save_state()
+  end,
 })

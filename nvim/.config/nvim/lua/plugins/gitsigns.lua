@@ -73,6 +73,7 @@ return {
       -- Merge conflict helpers (no extra plugin required)
       -- ----------------------------------------------------
       local function is_git_dir(path)
+---@diagnostic disable-next-line: undefined-field
         return path and #path > 0 and vim.uv.fs_stat(path) ~= nil
       end
 
@@ -80,7 +81,9 @@ return {
         local ok_cache, cache = pcall(require, 'gitsigns.cache')
         if ok_cache and cache and cache.cache and cache.cache[vim.api.nvim_get_current_buf()] then
           local c = cache.cache[vim.api.nvim_get_current_buf()]
+---@diagnostic disable-next-line: undefined-field
           if c and c.gitdir then
+---@diagnostic disable-next-line: undefined-field
             return c.gitdir
           end
         end

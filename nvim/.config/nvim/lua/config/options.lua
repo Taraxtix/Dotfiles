@@ -8,10 +8,10 @@ opt.number = true
 opt.relativenumber = true
 
 -- Enable mouse support in all modes.
-opt.mouse = "a"
+opt.mouse = 'a'
 
 -- Use the system clipboard by default (Wayland: wl-clipboard via Neovim provider).
-opt.clipboard = "unnamedplus"
+opt.clipboard = 'unnamedplus'
 
 -- Use spaces instead of literal tab characters.
 opt.expandtab = true
@@ -35,7 +35,7 @@ opt.scrolloff = 8
 opt.sidescrolloff = 8
 
 -- Live substitute preview in a split.
-opt.inccommand = "split"
+opt.inccommand = 'split'
 
 -- Enable true colors (needed for modern colorschemes).
 opt.termguicolors = true
@@ -53,27 +53,27 @@ opt.updatetime = 250
 opt.timeoutlen = 400
 
 -- Keep the sign column visible (prevents text shifting).
-opt.signcolumn = "yes"
+opt.signcolumn = 'yes'
 
 -- Case-insensitive search unless uppercase appears.
 opt.ignorecase = true
 opt.smartcase = true
 
 -- Show a guide column at 100 chars (adjust later).
-opt.colorcolumn = "100"
+opt.colorcolumn = '100'
 
 -- Show certain invisible characters.
 opt.list = true
-opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Persist undo history across sessions.
 opt.undofile = true
 
 -- Store undo files in Neovim's state directory.
-opt.undodir = vim.fn.stdpath("state") .. "/undo"
+opt.undodir = vim.fn.stdpath('state') .. '/undo'
 
 -- Prevent auto-inserting comment leaders on new lines.
-opt.formatoptions:remove({ "c", "r", "o" })
+opt.formatoptions:remove({ 'c', 'r', 'o' })
 
 -- Keep command line height minimal.
 opt.cmdheight = 1
@@ -88,4 +88,4 @@ opt.linebreak = true
 opt.breakindent = true
 
 -- Make wrapped lines visually continue instead of disappearing.
-opt.showbreak = "↪ "
+opt.showbreak = '↪ '

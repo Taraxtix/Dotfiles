@@ -8,26 +8,26 @@
 local M = {} -- Module table.
 
 -- Create a dedicated namespace for our extmarks so we can clear/redraw easily.
-local ns = vim.api.nvim_create_namespace("ConfigInlineDiagnostics")
+local ns = vim.api.nvim_create_namespace('ConfigInlineDiagnostics')
 
 -- Map diagnostic severity to standard highlight groups that colorschemes (rose-pine) style.
 local severity_to_hl = {
-  [vim.diagnostic.severity.ERROR] = "DiagnosticVirtualTextError", -- Red-ish (theme-controlled)
-  [vim.diagnostic.severity.WARN]  = "DiagnosticVirtualTextWarn",  -- Yellow-ish
-  [vim.diagnostic.severity.INFO]  = "DiagnosticVirtualTextInfo",  -- Blue-ish
-  [vim.diagnostic.severity.HINT]  = "DiagnosticVirtualTextHint",  -- Gray/green-ish
+  [vim.diagnostic.severity.ERROR] = 'DiagnosticVirtualTextError', -- Red-ish (theme-controlled)
+  [vim.diagnostic.severity.WARN] = 'DiagnosticVirtualTextWarn', -- Yellow-ish
+  [vim.diagnostic.severity.INFO] = 'DiagnosticVirtualTextInfo', -- Blue-ish
+  [vim.diagnostic.severity.HINT] = 'DiagnosticVirtualTextHint', -- Gray/green-ish
 }
 
 -- Sanitize diagnostic message into a single line (inline text should not contain newlines).
 local function normalize_message(msg)
   -- Convert nil to empty string.
-  msg = msg or ""
+  msg = msg or ''
   -- Replace newlines and carriage returns with spaces.
-  msg = msg:gsub("\r", " "):gsub("\n", " ")
+  msg = msg:gsub('\r', ' '):gsub('\n', ' ')
   -- Collapse multiple spaces into one.
-  msg = msg:gsub("%s+", " ")
+  msg = msg:gsub('%s+', ' ')
   -- Trim leading/trailing spaces.
-  msg = msg:gsub("^%s+", ""):gsub("%s+$", "")
+  msg = msg:gsub('^%s+', ''):gsub('%s+$', '')
   -- Return the cleaned message.
   return msg
 end
@@ -43,25 +43,25 @@ local function wrap_message(msg, max_width)
   local out = {}
 
   -- Current line being built.
-  local line = ""
+  local line = ''
 
   -- Iterate words so wrapping happens at word boundaries.
-  for word in msg:gmatch("%S+") do
+  for word in msg:gmatch('%S+') do
     -- Candidate if we append this word.
-    local candidate = (line == "") and word or (line .. " " .. word)
+    local candidate = (line == '') and word or (line .. ' ' .. word)
 
     -- If candidate fits, keep building the current line.
     if vim.fn.strdisplaywidth(candidate) <= max_width then
       line = candidate
     else
       -- Otherwise, push the current line if non-empty.
-      if line ~= "" then
+      if line ~= '' then
         table.insert(out, line)
       end
 
       -- If a single word is longer than max_width, hard-split it.
       if vim.fn.strdisplaywidth(word) > max_width then
-        local chunk = ""
+        local chunk = ''
         for i = 1, #word do
           local ch = word:sub(i, i)
           local cand = chunk .. ch
@@ -81,7 +81,7 @@ local function wrap_message(msg, max_width)
   end
 
   -- Flush last line if any.
-  if line ~= "" then
+  if line ~= '' then
     table.insert(out, line)
   end
 
@@ -103,7 +103,7 @@ local function get_buf_win_width(bufnr)
   end
 
   -- Otherwise, if there is any window showing the buffer, use the first.
-  if type(wins) == "table" and #wins > 0 then
+  if type(wins) == 'table' and #wins > 0 then
     return vim.api.nvim_win_get_width(wins[1])
   end
 
@@ -144,18 +144,18 @@ local function render(bufnr)
     local msg = normalize_message(d.message)
 
     -- Skip empty messages.
-    if msg ~= "" then
+    if msg ~= '' then
       -- Determine highlight group from severity.
-      local hl = severity_to_hl[d.severity] or "DiagnosticVirtualTextInfo"
+      local hl = severity_to_hl[d.severity] or 'DiagnosticVirtualTextInfo'
 
       -- Get the current line text to compute how much space is left at EOL.
-      local line = vim.api.nvim_buf_get_lines(bufnr, d.lnum, d.lnum + 1, true)[1] or ""
+      local line = vim.api.nvim_buf_get_lines(bufnr, d.lnum, d.lnum + 1, true)[1] or ''
 
       -- Display width of the line as shown (tabs expand, etc.).
       local line_width = vim.fn.strdisplaywidth(line)
 
       -- We add a small prefix so diagnostics are visually separated.
-      local prefix = " 󰌶 " -- icon + spacing (font-dependent; safe if missing)
+      local prefix = ' 󰌶 ' -- icon + spacing (font-dependent; safe if missing)
       local inline_text = prefix .. msg
 
       -- Available space on the right side of the line in the current window.
@@ -169,9 +169,9 @@ local function render(bufnr)
           -- virt_text is a list of {text, highlight}.
           virt_text = { { inline_text, hl } },
           -- Place the text at the end-of-line (EOL).
-          virt_text_pos = "eol",
+          virt_text_pos = 'eol',
           -- Keep it aligned with the line it belongs to.
-          hl_mode = "combine",
+          hl_mode = 'combine',
         })
       else
         -- Otherwise, render above the line as virtual lines.
@@ -195,7 +195,7 @@ local function render(bufnr)
           -- Put the virtual lines above the real line.
           virt_lines_above = true,
           -- Combine highlight with existing.
-          hl_mode = "combine",
+          hl_mode = 'combine',
         })
       end
     end
@@ -217,15 +217,15 @@ function M.setup()
     update_in_insert = false,
     -- Keep floating diagnostics available (e.g., on hover) if you want later.
     float = {
-      border = "rounded",
-      source = "if_many",
+      border = 'rounded',
+      source = 'if_many',
     },
   })
 
   -- Redraw diagnostics when diagnostics change.
-  vim.api.nvim_create_autocmd("DiagnosticChanged", {
+  vim.api.nvim_create_autocmd('DiagnosticChanged', {
     -- Describe for debugging.
-    desc = "Redraw inline diagnostics on changes",
+    desc = 'Redraw inline diagnostics on changes',
     -- Callback gives us the buffer in args.buf.
     callback = function(args)
       render(args.buf)
@@ -233,16 +233,16 @@ function M.setup()
   })
 
   -- Redraw when entering a buffer window (needed on first open).
-  vim.api.nvim_create_autocmd({ "BufWinEnter", "BufEnter" }, {
-    desc = "Redraw inline diagnostics on buffer enter",
+  vim.api.nvim_create_autocmd({ 'BufWinEnter', 'BufEnter' }, {
+    desc = 'Redraw inline diagnostics on buffer enter',
     callback = function(args)
       render(args.buf)
     end,
   })
 
   -- Redraw on resize because our wrap/overflow decisions depend on window width.
-  vim.api.nvim_create_autocmd("VimResized", {
-    desc = "Redraw inline diagnostics on resize",
+  vim.api.nvim_create_autocmd('VimResized', {
+    desc = 'Redraw inline diagnostics on resize',
     callback = function()
       -- Redraw for the current buffer (cheap enough).
       render(vim.api.nvim_get_current_buf())
