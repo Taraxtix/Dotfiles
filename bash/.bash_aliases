@@ -12,7 +12,7 @@ alias gpush='git pull -q && git push'
 alias lg='lazygit'
 
 #Eza aliases
-alias l='eza -h --git --no-time'
+alias l='eza -h'
 alias ll='eza -lh --git --no-time'
 alias la='eza -ha --git --no-time'
 alias lla='eza -lha --git --no-time'
@@ -95,3 +95,9 @@ standalone() {
 }
 
 alias evince='standalone evince'
+
+function open_md() {
+  pandoc $1 > /tmp/$1.html
+  xdg-open /tmp/$1.html
+}
+
