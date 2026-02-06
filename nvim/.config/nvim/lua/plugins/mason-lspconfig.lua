@@ -16,6 +16,7 @@ return {
     mlsp.setup({
       ensure_installed = {
         "lua_ls", -- Lua language server (LuaLS).
+        "marksman",
       },
 
       automatic_installation = true,

@@ -119,5 +119,9 @@ return {
     })
     vim.lsp.enable('rust_analyzer')
 
+    vim.lsp.config('marksman', {
+      capabilities = capabilities,
+    })
+    vim.lsp.enable('marksman')
   end,
 }
