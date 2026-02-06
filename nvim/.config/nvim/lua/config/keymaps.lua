@@ -120,11 +120,11 @@ map('n', '<leader>cgt', function()
   require('telescope.builtin').lsp_type_definitions()
 end, { desc = 'Go to Type Definitions' })
 
----- Compilation Mode ----
--- Run --
-map('n', '<leader>Cr', function()
-  require('config.compile').run()
-end, { desc = 'Compile: run' })
+-- ---- Compilation Mode ----
+-- -- Run --
+-- map('n', '<leader>Cr', function()
+--   require('config.compile').run()
+-- end, { desc = 'Compile: run' })
 
 ---- Find ----
 -- Files --

@@ -61,20 +61,20 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 
 -- Load the compilation buffer state on startup, save on exit.
 
-local group = vim.api.nvim_create_augroup('ConfigCompilation', { clear = true })
-
-vim.api.nvim_create_autocmd('VimEnter', {
-  group = group,
-  callback = function()
-    -- Load persisted output and last command.
-    require('config.compile').load_state()
-  end,
-})
-
-vim.api.nvim_create_autocmd('VimLeavePre', {
-  group = group,
-  callback = function()
-    -- Save output and last command.
-    require('config.compile').save_state()
-  end,
-})
+-- local group = vim.api.nvim_create_augroup('ConfigCompilation', { clear = true })
+--
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   group = group,
+--   callback = function()
+--     -- Load persisted output and last command.
+--     require('config.compile').load_state()
+--   end,
+-- })
+--
+-- vim.api.nvim_create_autocmd('VimLeavePre', {
+--   group = group,
+--   callback = function()
+--     -- Save output and last command.
+--     require('config.compile').save_state()
+--   end,
+-- })
