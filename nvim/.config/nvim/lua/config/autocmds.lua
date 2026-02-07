@@ -35,28 +35,22 @@ autocmd('BufWritePost', {
   end,
 })
 
-vim.api.nvim_create_autocmd('BufReadPost', {
-  group = group,
-  pattern = '*',
-  command = 'silent! loadview',
-})
-
 vim.api.nvim_create_autocmd('BufWinEnter', {
   group = group,
   pattern = '*',
-  command = 'silent! loadview',
-})
-
-vim.api.nvim_create_autocmd('WinEnter', {
-  group = group,
-  pattern = '*',
-  command = 'silent! loadview',
+  callback = function()
+    pcall(vim.cmd, 'silent! loadview')
+    if vim.wo.foldlevel == 0 then
+      vim.opt_local.foldlevel = 99
+      vim.opt_local.foldlevelstart = 99
+    end
+  end,
 })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = group,
   pattern = '*',
-  command = 'silent! mkview',
+  command = 'silent! mkview!',
 })
 
 -- Load the compilation buffer state on startup, save on exit.

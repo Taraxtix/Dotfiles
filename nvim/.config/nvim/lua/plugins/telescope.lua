@@ -18,12 +18,31 @@ return {
       defaults = {
         layout_strategy = 'horizontal',
         follow_symlinks = true,
+        no_ignore = true,
+      },
+
+      pickers = {
+        find_files = {
+          find_command = {
+            'ag',
+            '-q',
+            '-g',
+            '',
+            '--nocolor',
+            '--follow',
+            '-I',
+            'target',
+            '-I',
+            '.git',
+            '--hidden',
+            '-U',
+          },
+        },
       },
 
       extensions = {
         project = {
           on_project_selected = function(prompt_bufnr)
-
             local actions = require('telescope.actions')
             local action_state = require('telescope.actions.state')
 
@@ -55,7 +74,10 @@ return {
                 return
               end
             else
-              vim.notify('Harpoon was unable to be required inside on_project_selected', vim.log.levels.ERROR)
+              vim.notify(
+                'Harpoon was unable to be required inside on_project_selected',
+                vim.log.levels.ERROR
+              )
             end
 
             require('telescope.builtin').find_files({

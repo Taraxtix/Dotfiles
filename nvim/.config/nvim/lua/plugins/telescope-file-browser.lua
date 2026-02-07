@@ -11,6 +11,7 @@ return {
       extensions = {
         file_browser = {
           follow_symlinks = true,
+          no_ignore = true,
         }
       }
     })

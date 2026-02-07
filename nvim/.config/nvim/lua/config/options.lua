@@ -93,3 +93,8 @@ opt.showbreak = '↪ '
 -- Makes folds, cursor and curdir part of the view
 opt.viewoptions = { 'folds', 'cursor', 'curdir' }
 
+-- Fold related options
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
+opt.foldcolumn = "1"

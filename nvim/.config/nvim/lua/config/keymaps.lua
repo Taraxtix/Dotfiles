@@ -26,27 +26,19 @@ map(
 -- Make Y behave like D/C (yank to end of line).
 map('n', 'Y', 'y$', vim.tbl_extend('force', opts, { desc = 'Yank to end of line' }))
 
--- Small helper: open a terminal in a horizontal split using built-in :terminal.
-local function open_terminal_split()
-  vim.cmd('split')
-  vim.cmd('resize 30')
-  vim.cmd('terminal')
-  vim.cmd('startinsert')
-end
-
--- Ctrl+` opens a terminal split.
+-- Ctrl+` toggles a floating terminal (toggleterm.nvim).
 map(
   'n',
   '<C-`>',
-  open_terminal_split,
-  vim.tbl_extend('force', opts, { desc = 'Open terminal split' })
+  '<cmd>ToggleTerm direction=float<CR>',
+  vim.tbl_extend('force', opts, { desc = 'Toggle terminal' })
 )
--- Ctrl+` in terminal closes the split.
+-- Ctrl+` in terminal closes the floating terminal.
 map(
   't',
   '<C-`>',
-  '<C-\\><C-n><cmd>close<CR>',
-  vim.tbl_extend('force', opts, { desc = 'Close terminal split' })
+  '<C-\\><C-n><cmd>ToggleTerm<CR>',
+  vim.tbl_extend('force', opts, { desc = 'Toggle terminal' })
 )
 
 ------ LEADER BASED KEYBINDS ------
