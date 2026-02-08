@@ -1,5 +1,5 @@
 {
-  "temperature":{
-    "format":"{temperatureC}󰔄 "
-  },
+  "temperature": {
+    "format": "{temperatureC}󰔄 "
+  }
 }

@@ -4,6 +4,6 @@
     "return-type": "json",
     "interval": 600,
     "signal": 11,
-   "on-click": "hyprctl dispatch exec '[float; move 0 40] kitty -e sh -lc \"fastfetch && yay -Syu && kill -SIGRTMIN+11 waybar\"'"
-  } 
+    "on-click": "hyprctl dispatch exec '[float; move 0 40] kitty -e sh -lc \"fastfetch && yay -Syu && kill -SIGRTMIN+11 waybar\"'"
+  }
 }

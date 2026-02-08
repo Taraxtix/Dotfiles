@@ -1,8 +1,7 @@
 {
   "custom/battery": {
-	  "interval": 1,
-	  "exec": "~/.config/waybar/scripts/battery_status.sh",
-	  "return-type": "json",
-  },
+    "interval": 1,
+    "exec": "~/.config/waybar/scripts/battery_status.sh",
+    "return-type": "json"
+  }
 }
-

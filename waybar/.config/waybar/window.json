@@ -1,18 +1,18 @@
 {
-	"hyprland/window": {
-		"icon":true,
-		"rewrite":{
-			"Steam": "",
-			"KDE Connect": "",
-			"\\(\\d+\\) YouTube — Zen Browser": " ",
-			"(\\(\\d+\\) )?(.*) - YouTube — Zen Browser": " $2",
-			"(.*) - Yahoo Mail — Zen Browser": " $1",
-			// This is messed up: without the `^` and `$` the order of rewrite is reversed and thus breaks it
-			"^(.*) — Zen Browser$": "$1",
-			"(.*) - Discord": "$1",
-			"(.*) - Deezer": "$1",
-		},
-		"separate-outputs":true,
-		"max-length":50,
-	},
+  "hyprland/window": {
+    "icon": true,
+    "rewrite": {
+      "Steam": "",
+      "KDE Connect": "",
+      "\\(\\d+\\) YouTube — Zen Browser": " ",
+      "(\\(\\d+\\) )?(.*) - YouTube — Zen Browser": " $2",
+      "(.*) - Yahoo Mail — Zen Browser": " $1",
+      // This is messed up: without the `^` and `$` the order of rewrite is reversed and thus breaks it
+      "^(.*) — Zen Browser$": "$1",
+      "(.*) - Discord": "$1",
+      "(.*) - Deezer": "$1"
+    },
+    "separate-outputs": true,
+    "max-length": 50
+  }
 }
