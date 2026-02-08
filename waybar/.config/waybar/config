@@ -49,7 +49,7 @@
     "format-ethernet": "󰈀",
     "format-disconnected": "󰤭",
 
-    "on-click": "nm-connection-editor",
+    "on-click": "hyprctl dispatch exec 'kitty --class netpala netpala'",
 
     "tooltip": true,
     "tooltip-format-wifi": "{essid}\nIP: {ipaddr}\nSpeed:  {bandwidthUpBytes}  {bandwidthDownBytes}",
