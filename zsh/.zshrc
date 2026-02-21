@@ -196,3 +196,6 @@ export PATH="/home/taraxtix/.config/herd-lite/bin:$PATH"
 export PHP_INI_SCAN_DIR="/home/taraxtix/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
 
 export MANPAGER="bat -plman"
+export PAGER="bat -p"
+
+[ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
