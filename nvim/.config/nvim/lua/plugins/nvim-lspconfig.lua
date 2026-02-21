@@ -37,6 +37,11 @@ return {
           vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
         end
 
+        -- Ruff and Pyright overlap on hover; keep Pyright for language features.
+        if client and client.name == 'ruff' then
+          client.server_capabilities.hoverProvider = false
+        end
+
         -- Format Rust files on save using rust-analyzer / rustfmt
         if client ~= nil and client.name == 'rust_analyzer' then
           vim.api.nvim_create_autocmd('BufWritePre', {
@@ -118,6 +123,37 @@ return {
       },
     })
     vim.lsp.enable('rust_analyzer')
+
+    vim.lsp.config('pyright', {
+      capabilities = capabilities,
+
+      settings = {
+        pyright = {
+          disableOrganizeImports = true,
+        },
+
+        python = {
+          analysis = {
+            typeCheckingMode = 'strict',
+            diagnosticMode = 'workspace',
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+          },
+        },
+      },
+    })
+    vim.lsp.enable('pyright')
+
+    vim.lsp.config('ruff', {
+      capabilities = capabilities,
+
+      init_options = {
+        settings = {
+          -- Ruff LSP settings go here.
+        },
+      },
+    })
+    vim.lsp.enable('ruff')
 
     vim.lsp.config('marksman', {
       capabilities = capabilities,

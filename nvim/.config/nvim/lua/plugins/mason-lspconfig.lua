@@ -17,6 +17,8 @@ return {
       ensure_installed = {
         "lua_ls", -- Lua language server (LuaLS).
         "marksman",
+        "pyright",
+        "ruff",
       },
 
       automatic_installation = true,
