@@ -13,7 +13,7 @@ visual_bell no
 bell_on_tab no
 cursor_trail 1
 hide_window_decoration yes
-background_opacity 0.9
+background_opacity 0.7
 
 # Truecolor
 allow_remote_control yes
@@ -54,20 +54,9 @@ map ctrl+shift+end no_op
 # # Ctrl+Backspace → delete previous word
 map ctrl+backspace send_text all \x17
 
-# Send CSI-u for Ctrl+` (unicode 96, ctrl modifier = 5)
-map ctrl+`     send_text all \x1b[96;5u
-# Send CSI-u for Ctrl+Enter (Enter/CR is 13, ctrl modifier = 5)
-map ctrl+enter send_text all \x1b[13;5u
-
 # Minimal Tab bar styling 
 tab_bar_edge                bottom
 tab_bar_style               powerline
 tab_powerline_style         slanted
 tab_title_template          {title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}
 
-
-
-# BEGIN_KITTY_THEME
-# Rosé Pine
-include current-theme.conf
-# END_KITTY_THEME
